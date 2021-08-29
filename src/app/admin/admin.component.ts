@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../service/auth/auth.service';
 
 @Component({
   selector: 'app-admin',
@@ -7,10 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminComponent implements OnInit {
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
     this.loadclass()
+    this.getProfile()
   }
 
 
@@ -18,6 +20,10 @@ export class AdminComponent implements OnInit {
     const body = document.querySelector('body');
     body?.classList.add('sidebar-mini');
     body?.classList.remove('login-page')
+  }
+
+  getProfile() {
+    this.authService.getProfile().subscribe();
   }
 
 }
