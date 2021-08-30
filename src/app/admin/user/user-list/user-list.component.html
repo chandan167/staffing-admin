@@ -1,0 +1,89 @@
+<div class="container-fluid">
+  <div class="row mb-5">
+    <div class="col-sm-6">
+      <h1 class="m-0">Dashboard</h1>
+    </div><!-- /.col -->
+  </div><!-- /.row -->
+</div><!-- /.container-fluid -->
+
+
+<section class="content">
+  <div class="container-fluid">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">User List {{users.length}}/{{pagination?.total}}</h3>
+
+            <div class="card-tools">
+              <div class="input-group input-group-sm" style="width: 200px;">
+                <input type="text" name="table_search" class="form-control float-right" #search placeholder="Search" (input)="searchUser(search.value)">
+
+                <!-- <div class="input-group-append">
+                  <button type="submit" class="btn btn-default">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div> -->
+              </div>
+            </div>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body table-responsive p-0" style="height: 650px;">
+            <table class="table table-head-fixed table-hover text-nowrap">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Image</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>Status</th>
+                  <th>Created At</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let user of users">
+                  <td>{{user.id}}</td>
+                  <td>
+                    <div class="user-panel pb-3 d-flex">
+                      <div class="image">
+                        <img src="assets/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <span>{{user.name}}</span>
+                  </td>
+                  <td>
+                    <span>{{user.email}}</span>
+                  </td>
+                  <td>
+                    <span>{{user.phone}}</span>
+                  </td>
+                  <td>
+                    17-12-2021
+                  </td>
+                  <td>
+                    {{user.created_at | date}}
+                  </td>
+                  <td>
+                    <a href="#" class="btn btn-primary m-1"><i class="far fa-eye"></i></a>
+                    <a href="#" class="btn btn-primary m-1"><i class="far fa-edit"></i></a>
+                    <a href="#" class="btn btn-danger m-1"><i class="far fa-trash-alt"></i></a>
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <button class="btnbt-primary" (click)="nextPage()">Next</button>
+              </tfoot>
+            </table>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+      </div>
+    </div>
+  </div>
+</section>
