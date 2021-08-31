@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SpinnerModule } from '../spinner/spinner.module';
+import { ToastrModule } from 'ngx-toastr';
 
 
 
@@ -10,12 +11,14 @@ import { SpinnerModule } from '../spinner/spinner.module';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    SpinnerModule
+    SpinnerModule,
+    ToastrModule.forRoot()
   ],
   exports: [
     ReactiveFormsModule,
     CommonModule,
-    SpinnerModule
+    SpinnerModule,
+    ToastrModule
   ],
 })
 export class ShareModule { }

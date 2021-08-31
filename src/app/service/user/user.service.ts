@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
-import { Pagination } from 'src/app/interface/base.interface';
+import { ApiResponse, Pagination } from 'src/app/interface/base.interface';
 import { User } from 'src/app/interface/user.interface';
 import { Stroe } from '../stroe';
 
@@ -12,9 +12,15 @@ export interface UserList {
   pagination: Pagination
 }
 
-export interface UserListResponse extends Response{
+export interface UserListResponse extends ApiResponse{
   data: {
     users: UserList
+  }
+}
+
+export interface UserAddResponse extends ApiResponse{
+  data: {
+    user: User
   }
 }
 
@@ -37,7 +43,8 @@ const initalState: UserList = {
 export class UserService extends Stroe<UserList> {
 
   private serch$ = new BehaviorSubject<string>('');
-  private next_page$ = new BehaviorSubject<number|null>(1);
+  private next_page$ = new BehaviorSubject<number | null>(1);
+  private loading = new BehaviorSubject<boolean>(false);
   constructor(private http: HttpClient) {
     super(initalState)
 
@@ -45,18 +52,38 @@ export class UserService extends Stroe<UserList> {
       switchMap(([search, next_page]): any => {
         return this.findAllUsers(next_page, search);
       })
-    ).subscribe();
+    ).subscribe(() =>
+      this.loading.next(false)
+    );
   }
 
 
-  private findAllUsers(next_page:number|any, search:string):Observable<UserListResponse> {
+  isloading() {
+    return this.loading.asObservable();
+  }
+  private findAllUsers(next_page: number | any, search: string): Observable<UserListResponse> {
+    this.loading.next(true);
     return this.http.get<UserListResponse>('/user', { params: { page: next_page, search: search } }).pipe(
       tap((data: UserListResponse) => {
         const previous_value = this.storeValue.data
-        this.nextValue({data: [...previous_value, ...data.data.users.data], pagination: data.data.users.pagination})
+          this.nextValue({data: [...previous_value, ...data.data.users.data], pagination: data.data.users.pagination})
       })
     );
   }
+
+
+  create(user:User): Observable<UserAddResponse> {
+    return this.http.post<UserAddResponse>('/user', user).pipe(
+      tap((data:UserAddResponse) => {
+        const previous_data = this.storeValue.data;
+        const pagination = this.storeValue.pagination;
+        pagination.total += 1;
+        const latest_data = [data.data.user, ...previous_data];
+        this.nextValue({ data: latest_data, pagination });
+      })
+    )
+  }
+
 
   private searchTimeout: any = null;
   search(search: string) {
@@ -65,6 +92,7 @@ export class UserService extends Stroe<UserList> {
       clearTimeout(this.searchTimeout)
     }
     this.searchTimeout = setTimeout(() => {
+      this.next_page$.next(1)
       this.nextValue(initalState);
       this.serch$.next(search)
     }, 500)

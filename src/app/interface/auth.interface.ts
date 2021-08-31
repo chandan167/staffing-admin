@@ -1,4 +1,4 @@
-import { Response } from "./base.interface";
+import { ApiResponse } from "./base.interface";
 
 
 export interface Admin {
@@ -31,11 +31,11 @@ export interface ProfileData {
 
 
 
-export interface AuthResponse extends Response{
+export interface AuthResponse extends ApiResponse{
   data: AuthData;
 };
 
 
-export interface ProfileResponse extends Response{
+export interface ProfileResponse extends ApiResponse{
   data: ProfileData;
 };

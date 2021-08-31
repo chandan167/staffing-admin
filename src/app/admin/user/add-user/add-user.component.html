@@ -1,0 +1,64 @@
+<div class="container-fluid">
+  <div class="row mb-2">
+    <div class="col-sm-6">
+      <h1 class="m-0">Add User</h1>
+    </div><!-- /.col -->
+  </div><!-- /.row -->
+</div><!-- /.container-fluid -->
+
+
+<section class="content">
+  <div class="container-fluid">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+      <div class="col-md-6 mx-auto">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Add User</h3>
+          </div>
+          <div class="card-body">
+            <app-spinner [name]="spinnerName"></app-spinner>
+            <form [formGroup]="addUserForm" class="mt-3" [noValidate]="true" (ngSubmit)="addUser()">
+                <div class="alert alert-danger" *ngIf="addUserForm.getError('serverError')">
+                  <strong>Server Error</strong> <span class="ml-2">{{addUserForm.getError('serverError')}}</span>
+                </div>
+                <div class="mb-3">
+                  <label for="name">Name</label>
+                  <input type="text" class="form-control" [class.is-invalid]="nameError()" placeholder="Enter name" id="name" formControlName="name">
+                  <span class="text-danger" *ngIf="nameError()">{{nameError()}}</span>
+                </div>
+                <div class="mb-3">
+                  <label for="email">Email</label>
+                  <input type="email" class="form-control" [class.is-invalid]="emailError()" placeholder="Enter email" id="email" formControlName="email">
+                  <span class="text-danger" *ngIf="emailError()">{{emailError()}}</span>
+                </div>
+
+                <div class="mb-3">
+                  <label for="phone">Phone</label>
+                  <input type="text" class="form-control" placeholder="Enter phone" id="phone" formControlName="phone">
+                </div>
+
+                <div class="mb-3">
+                  <div class="container row">
+                    <div class="form-check">
+                      <input class="form-check-input" id="email_verified_at" type="checkbox" formControlName="email_verified_at">
+                      <label class="form-check-label" form="email_verified_at">Email Verify</label>
+                    </div>
+                    <div class="form-check ml-4">
+                      <input class="form-check-input" id="phone_verified_at" type="checkbox" formControlName="phone_verified_at">
+                      <label class="form-check-label" form="phone_verified_at">Phone Verify</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="my-3">
+                  <button class="btn btn-primary mr-3" [disabled]='!addUserForm.valid'>Add User</button>
+                  <button class="btn btn-default"  type="reset">Reset</button>
+                </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

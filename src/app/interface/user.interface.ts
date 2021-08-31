@@ -1,14 +1,15 @@
 
 
 export interface User{
-  id: number;
+  readonly id: number;
   name: string;
   email: string;
-  email_verified_at: string;
-  ip: string;
-  image: string;
-  phone: string;
-  phone_verified_at: string;
+  email_verified_at: string|null;
+  ip: string |null;
+  image: string|null;
+  phone: string|null;
+  phone_verified_at: string|null;
+  block: string | null;
   created_at: string;
   updated_at: string;
 }

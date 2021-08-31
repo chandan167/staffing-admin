@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { Pagination } from 'src/app/interface/base.interface';
 import { User } from 'src/app/interface/user.interface';
 import { UserList, UserService } from 'src/app/service/user/user.service';
@@ -11,8 +12,9 @@ import { UserList, UserService } from 'src/app/service/user/user.service';
 export class UserListComponent implements OnInit {
 
   users: User[]
-  pagination: Pagination|any;
-  constructor(private userService: UserService) {
+  pagination: Pagination | any;
+  spinnerName:string ='UserListComponent'
+  constructor(private userService: UserService, private spinner: NgxSpinnerService) {
     this.users = [];
    }
 
@@ -20,6 +22,14 @@ export class UserListComponent implements OnInit {
     this.userService.store$.subscribe((data:UserList) => {
       this.users = data.data;
       this.pagination = data.pagination
+    })
+
+    this.userService.isloading().subscribe(data => {
+      if (data) {
+        this.spinner.show(this.spinnerName)
+      } else {
+        this.spinner.hide(this.spinnerName)
+      }
     })
   }
 

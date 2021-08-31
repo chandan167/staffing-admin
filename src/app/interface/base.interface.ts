@@ -1,4 +1,4 @@
-export interface Response{
+export interface ApiResponse{
   status: number,
   data: any;
   message: string,

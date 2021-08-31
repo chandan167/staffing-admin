@@ -7,6 +7,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserListComponent } from './user/user-list/user-list.component';
 import { UserModule } from './user/user.module';
+import { AddUserComponent } from './user/add-user/add-user.component';
 
 
 
@@ -16,7 +17,8 @@ const router: Routes = [
       { path: "dashboard", component: DashboardComponent },
       {
         path: 'users', children: [
-          { path: 'list', component: UserListComponent }
+          { path: 'list', component: UserListComponent },
+          { path: 'add', component: AddUserComponent },
         ]
       },
       { path: "", redirectTo: "dashboard", pathMatch: 'full' },
