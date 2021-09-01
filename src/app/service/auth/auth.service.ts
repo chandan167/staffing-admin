@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { Admin, AuthResponse, ProfileData, ProfileResponse, TokenData } from 'src/app/interface/auth.interface';
-import { Stroe } from '../stroe';
+import { Store } from '../store';
 
 
 
@@ -27,7 +27,7 @@ const initalState: Admin = {
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService extends Stroe<Admin> {
+export class AuthService extends Store<Admin> {
 
   private token: BehaviorSubject<TokenData | any>;
   private profile: BehaviorSubject<Admin>;

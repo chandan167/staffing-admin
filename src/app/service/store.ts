@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 
-export class Stroe<T> {
+export class Store<T> {
 
   private store: BehaviorSubject<T>;
   store$: Observable<T>;

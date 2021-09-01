@@ -5,7 +5,7 @@ import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
 import { ApiResponse, Pagination } from 'src/app/interface/base.interface';
 import { User } from 'src/app/interface/user.interface';
-import { Stroe } from '../stroe';
+import { Store } from '../store';
 
 
 export interface UserList {
@@ -53,7 +53,7 @@ const initalState: UserList = {
 @Injectable({
   providedIn: 'root'
 })
-export class UserService extends Stroe<UserList> {
+export class UserService extends Store<UserList> {
 
   private serch$ = new BehaviorSubject<string>('');
   private next_page$ = new BehaviorSubject<number | null>(1);
