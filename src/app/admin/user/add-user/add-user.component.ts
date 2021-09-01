@@ -32,10 +32,10 @@ export class AddUserComponent implements OnInit {
     if (!this.addUserForm.valid) {
       return;
     }
-    this.spinner.show(this.spinnerName);
+    this.spinner.show(this.spinnerName)
     this.userService.create(this.addUserForm.value).subscribe((data: UserAddResponse) => {
+      this.addUserForm.reset()
       this.spinner.hide(this.spinnerName)
-      this.toastr.success('Add User', data.message)
     }, (error: HttpErrorResponse) => {
       this.spinner.hide(this.spinnerName)
       this.addUserForm.setErrors({ serverError: error.error.message });

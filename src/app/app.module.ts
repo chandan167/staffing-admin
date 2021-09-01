@@ -8,6 +8,9 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 
 
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -27,7 +30,8 @@ import { UnauthorizedInterceptor } from './interceptor/unauthorized/unauthorized
     HttpClientModule,
     ShareModule,
     LoadingBarRouterModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    SweetAlert2Module.forRoot(),
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptor, multi: true

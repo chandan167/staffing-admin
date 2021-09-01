@@ -47,47 +47,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let user of users">
-                  <td>{{user.id}}</td>
-                  <td>
-                    <div class="user-panel pb-3 d-flex">
-                      <div class="image">
-                        <img src="assets/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <span>{{user.name | titlecase}}</span>
-                  </td>
-                  <td>
-                    <span>{{user.email | lowercase}}
-                      <i *ngIf="user.email_verified_at" class="fas text-success fa-check-circle fa-fw"></i>
-                      <i *ngIf="!user.email_verified_at" class="fas text-danger fa-times-circle fa-fw"></i>
-                    </span>
-                  </td>
-                  <td>
-                    <span *ngIf="user.phone">
-                      {{user.phone}}
-                      <i *ngIf="user.phone_verified_at" class="fas text-success fa-check-circle fa-fw"></i>
-                      <i *ngIf="!user.phone_verified_at" class="fas text-danger fa-times-circle fa-fw"></i>
-                    </span>
-                    <span *ngIf="!user.phone" class="text-muted">
-                     N/A
-                    </span>
-                  </td>
-                  <td>
-                    <button class="btn btn-danger btn-sm" *ngIf="!user.block">Block</button>
-                    <button class="btn btn-success btn-sm" *ngIf="user.block">Unblock</button>
-                  </td>
-                  <td>
-                    {{user.created_at | date:'d-MM-YYY | h:m a'}}
-                  </td>
-                  <td>
-                    <a href="#" class="btn btn-primary m-1"><i class="far fa-eye"></i></a>
-                    <a href="#" class="btn btn-primary m-1"><i class="far fa-edit"></i></a>
-                    <a href="#" class="btn btn-danger m-1"><i class="far fa-trash-alt"></i></a>
-                  </td>
-                </tr>
+                <tr app-table-tr *ngFor="let user of users" trackBy:userList [user]="user" (block)="block($event)" (delete)="deleteUser($event)"></tr>
               </tbody>
             </table>
           </div>

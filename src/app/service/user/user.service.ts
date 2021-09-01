@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
-import { switchMap, tap } from 'rxjs/operators';
+import { catchError, switchMap, tap } from 'rxjs/operators';
 import { ApiResponse, Pagination } from 'src/app/interface/base.interface';
 import { User } from 'src/app/interface/user.interface';
 import { Stroe } from '../stroe';
@@ -19,6 +20,18 @@ export interface UserListResponse extends ApiResponse{
 }
 
 export interface UserAddResponse extends ApiResponse{
+  data: {
+    user: User
+  }
+}
+
+export interface UserBlockResponse extends ApiResponse{
+  data: {
+    user: User
+  }
+}
+
+export interface UserDeleteResponse extends ApiResponse{
   data: {
     user: User
   }
@@ -45,7 +58,7 @@ export class UserService extends Stroe<UserList> {
   private serch$ = new BehaviorSubject<string>('');
   private next_page$ = new BehaviorSubject<number | null>(1);
   private loading = new BehaviorSubject<boolean>(false);
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private toster: ToastrService) {
     super(initalState)
 
     combineLatest(this.serch$, this.next_page$).pipe(
@@ -72,7 +85,8 @@ export class UserService extends Stroe<UserList> {
   }
 
 
-  create(user:User): Observable<UserAddResponse> {
+  create(user: User): Observable<UserAddResponse> {
+    this.loading.next(true);
     return this.http.post<UserAddResponse>('/user', user).pipe(
       tap((data:UserAddResponse) => {
         const previous_data = this.storeValue.data;
@@ -80,6 +94,59 @@ export class UserService extends Stroe<UserList> {
         pagination.total += 1;
         const latest_data = [data.data.user, ...previous_data];
         this.nextValue({ data: latest_data, pagination });
+        this.loading.next(false)
+        this.toster.success('User Add', data.message)
+      }),
+      catchError((error: HttpErrorResponse) => {
+        this.loading.next(false);
+        this.toster.error('Error !', error.error.message)
+        throw error;
+      })
+    )
+  }
+
+  block(id: number): Observable<UserBlockResponse> {
+    this.loading.next(true);
+    return this.http.put<UserBlockResponse>(`/user/${id}/block`, { }).pipe(
+      tap((data: UserBlockResponse) => {
+        let previous_data = this.storeValue.data;
+        previous_data = previous_data.map(user => {
+          if (user.id == id) {
+            return data.data.user;
+          }
+          return user;
+        });
+        const pagination = this.storeValue.pagination;
+        const latest_data = previous_data;
+        this.nextValue({ data: latest_data, pagination });
+        this.loading.next(false);
+        this.toster.success('User status', data.message)
+      }),
+      catchError((error: HttpErrorResponse) => {
+        this.loading.next(false);
+        this.toster.error('Error !', error.error.message)
+        throw error;
+      })
+    )
+  }
+
+
+  delete(id: number): Observable<UserDeleteResponse> {
+    this.loading.next(true)
+    return this.http.delete<UserDeleteResponse>(`/user/${id}`).pipe(
+      tap((data:UserDeleteResponse) => {
+        let previous_data = this.storeValue.data;
+        previous_data = previous_data.filter(user => user.id !== id);
+        const pagination = this.storeValue.pagination;
+        const latest_data = previous_data;
+        this.nextValue({ data: latest_data, pagination });
+        this.loading.next(false)
+        this.toster.success('User delete', data.message)
+      }),
+      catchError((error: HttpErrorResponse) => {
+        this.loading.next(false);
+        this.toster.error('Error !', error.error.message)
+        throw error;
       })
     )
   }

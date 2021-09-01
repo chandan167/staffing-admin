@@ -33,12 +33,24 @@ export class UserListComponent implements OnInit {
     })
   }
 
+  block(id:number) {
+    this.userService.block(id).subscribe();
+  }
+
+  deleteUser(id: number) {
+    this.userService.delete(id).subscribe();
+  }
+
   searchUser(value:any) {
     this.userService.search(value)
   }
 
   nextPage() {
     this.userService.next_page()
+  }
+
+  userList(index:number, user:User) {
+    return user.id;
   }
 
 }

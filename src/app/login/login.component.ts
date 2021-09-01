@@ -18,8 +18,10 @@ export class LoginComponent implements OnInit {
 
   spinnerName = "LoginComponent"
   loginForm = new FormGroup({
-    email: new FormControl('chandan@gmail.com', [Validators.required, Validators.email]),
-    password: new FormControl('12334', [Validators.required]),
+    // chandan@gmail.com
+    // 12334
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required]),
   });
 
 
