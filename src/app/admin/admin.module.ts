@@ -8,6 +8,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserListComponent } from './user/user-list/user-list.component';
 import { UserModule } from './user/user.module';
 import { AddUserComponent } from './user/add-user/add-user.component';
+import { EditUserComponent } from './user/edit-user/edit-user.component';
 
 
 
@@ -19,6 +20,7 @@ const router: Routes = [
         path: 'users', children: [
           { path: 'list', component: UserListComponent },
           { path: 'add', component: AddUserComponent },
+          { path: ':id/edit', component: EditUserComponent },
         ]
       },
       { path: "", redirectTo: "dashboard", pathMatch: 'full' },

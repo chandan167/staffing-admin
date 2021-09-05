@@ -6,6 +6,7 @@ import { AddUserComponent } from './add-user/add-user.component';
 import { ShareModule } from 'src/app/share/share.module';
 import { TableTrComponent } from './user-list/table-tr/table-tr.component';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { EditUserComponent } from './edit-user/edit-user.component';
 
 
 
@@ -14,6 +15,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     UserListComponent,
     AddUserComponent,
     TableTrComponent,
+    EditUserComponent,
   ],
   imports: [
     CommonModule,

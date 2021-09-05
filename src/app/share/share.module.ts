@@ -3,22 +3,21 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SpinnerModule } from '../spinner/spinner.module';
 import { ToastrModule } from 'ngx-toastr';
+import { RouterModule } from '@angular/router';
 
 
 
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    SpinnerModule,
     ToastrModule.forRoot()
   ],
   exports: [
     ReactiveFormsModule,
     CommonModule,
     SpinnerModule,
-    ToastrModule
+    ToastrModule,
+    RouterModule
   ],
 })
 export class ShareModule { }

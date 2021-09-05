@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Pagination } from 'src/app/interface/base.interface';
 import { User } from 'src/app/interface/user.interface';
@@ -7,7 +7,8 @@ import { UserList, UserService } from 'src/app/service/user/user.service';
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.scss']
+  styleUrls: ['./user-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserListComponent implements OnInit {
 
@@ -51,6 +52,14 @@ export class UserListComponent implements OnInit {
 
   userList(index:number, user:User) {
     return user.id;
+  }
+
+  onRefresh() {
+    this.userService.refresh();
+  }
+
+  getSearchValue() {
+    return this.userService.getSearchValue();
   }
 
 }

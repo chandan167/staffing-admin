@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { User } from 'src/app/interface/user.interface';
 
 @Component({
   selector: 'tr[app-table-tr]',
   templateUrl: './table-tr.component.html',
-  styleUrls: ['./table-tr.component.scss']
+  styleUrls: ['./table-tr.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableTrComponent implements OnInit {
 
@@ -23,6 +24,5 @@ export class TableTrComponent implements OnInit {
   deleteUser() {
     this.deleteEvent.emit(this.user.id);
   }
-
 
 }

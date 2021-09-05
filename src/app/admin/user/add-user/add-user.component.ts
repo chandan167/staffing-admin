@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -8,7 +8,8 @@ import { UserAddResponse, UserService } from 'src/app/service/user/user.service'
 @Component({
   selector: 'app-add-user',
   templateUrl: './add-user.component.html',
-  styleUrls: ['./add-user.component.scss']
+  styleUrls: ['./add-user.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddUserComponent implements OnInit {
 

@@ -25,6 +25,18 @@ export interface UserAddResponse extends ApiResponse{
   }
 }
 
+export interface UserDetailResponse extends ApiResponse{
+  data: {
+    user: User
+  }
+}
+
+export interface UserUpdateResponse extends ApiResponse{
+  data: {
+    user: User
+  }
+}
+
 export interface UserBlockResponse extends ApiResponse{
   data: {
     user: User
@@ -58,10 +70,11 @@ export class UserService extends Store<UserList> {
   private serch$ = new BehaviorSubject<string>('');
   private next_page$ = new BehaviorSubject<number | null>(1);
   private loading = new BehaviorSubject<boolean>(false);
+  private refresh$ = new BehaviorSubject<boolean>(false);
   constructor(private http: HttpClient, private toster: ToastrService) {
     super(initalState)
 
-    combineLatest(this.serch$, this.next_page$).pipe(
+    combineLatest(this.serch$, this.next_page$, this.refresh$).pipe(
       switchMap(([search, next_page]): any => {
         return this.findAllUsers(next_page, search);
       })
@@ -95,11 +108,11 @@ export class UserService extends Store<UserList> {
         const latest_data = [data.data.user, ...previous_data];
         this.nextValue({ data: latest_data, pagination });
         this.loading.next(false)
-        this.toster.success('User Add', data.message)
+        this.toster.success(data.message, 'User Add')
       }),
       catchError((error: HttpErrorResponse) => {
         this.loading.next(false);
-        this.toster.error('Error !', error.error.message)
+        this.toster.error(error.error.message, 'Error !')
         throw error;
       })
     )
@@ -120,11 +133,11 @@ export class UserService extends Store<UserList> {
         const latest_data = previous_data;
         this.nextValue({ data: latest_data, pagination });
         this.loading.next(false);
-        this.toster.success('User status', data.message)
+        this.toster.success(data.message, 'User status')
       }),
       catchError((error: HttpErrorResponse) => {
         this.loading.next(false);
-        this.toster.error('Error !', error.error.message)
+        this.toster.error(error.error.message, 'Error !')
         throw error;
       })
     )
@@ -141,14 +154,35 @@ export class UserService extends Store<UserList> {
         const latest_data = previous_data;
         this.nextValue({ data: latest_data, pagination });
         this.loading.next(false)
-        this.toster.success('User delete', data.message)
+        this.toster.success( data.message,'User delete')
       }),
       catchError((error: HttpErrorResponse) => {
         this.loading.next(false);
-        this.toster.error('Error !', error.error.message)
+        this.toster.error( error.error.message, 'Error !',)
         throw error;
       })
     )
+  }
+
+  detail(id: number): Observable<UserDetailResponse> {
+    return this.http.get<UserDetailResponse>(`/user/${id}`);
+  }
+
+  update(id:number, data:User): Observable<UserUpdateResponse>{
+    return this.http.put<UserDetailResponse>(`/user/${id}`, data).pipe(
+      tap((data: UserUpdateResponse) => {
+        let previous_data = this.storeValue.data;
+        previous_data = previous_data.map(user => {
+          if (user.id == id) {
+            return data.data.user;
+          }
+          return user;
+        });
+        const pagination = this.storeValue.pagination;
+        const latest_data = previous_data;
+        this.nextValue({ data: latest_data, pagination });
+      })
+    );
   }
 
 
@@ -166,6 +200,10 @@ export class UserService extends Store<UserList> {
 
   }
 
+  getSearchValue() {
+    return this.serch$.getValue();
+  }
+
   next_page(next_page: number | null = null ) {
     if (!next_page) {
       next_page = this.storeValue.pagination.next_page;
@@ -174,6 +212,12 @@ export class UserService extends Store<UserList> {
       return
     }
     this.next_page$.next(next_page);
+  }
+
+  refresh() {
+    this.next_page$.next(1)
+      this.nextValue(initalState);
+    this.refresh$.next(!this.refresh$.getValue())
   }
 
 
