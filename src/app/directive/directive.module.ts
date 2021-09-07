@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { InfiiniteScrollDirective } from './infiniteScroll/infiinite-scroll.directive';
 import { UserPlaceholderImageDirective } from './user-placeholder-image/user-placeholder-image.directive';
 import { PlaceholderImageDirective } from './placeholder-image/placeholder-image.directive';
+import { ImgPreDirective } from './img-pre/img-pre.directive';
 
 
 
@@ -10,14 +11,16 @@ import { PlaceholderImageDirective } from './placeholder-image/placeholder-image
   declarations: [
     InfiiniteScrollDirective,
     UserPlaceholderImageDirective,
-    PlaceholderImageDirective
+    PlaceholderImageDirective,
+    ImgPreDirective
   ],
   imports: [
     CommonModule
   ],
   exports: [
     InfiiniteScrollDirective,
-    UserPlaceholderImageDirective
+    UserPlaceholderImageDirective,
+    ImgPreDirective
   ]
 })
 export class DirectiveModule { }

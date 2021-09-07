@@ -1,8 +1,10 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Pagination } from 'src/app/interface/base.interface';
 import { User } from 'src/app/interface/user.interface';
 import { UserList, UserService } from 'src/app/service/user/user.service';
+import { SubSink } from 'subsink';
 
 @Component({
   selector: 'app-user-list',
@@ -10,22 +12,27 @@ import { UserList, UserService } from 'src/app/service/user/user.service';
   styleUrls: ['./user-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UserListComponent implements OnInit {
+export class UserListComponent implements OnInit, OnDestroy {
 
-  users: User[]
-  pagination: Pagination | any;
+  users$: BehaviorSubject<User[]>
+  pagination$: BehaviorSubject<Pagination | any>
+
+  private sub: SubSink;
+
   spinnerName:string ='UserListComponent'
   constructor(private userService: UserService, private spinner: NgxSpinnerService) {
-    this.users = [];
+    this.users$ = new BehaviorSubject<User[]>([])
+    this.pagination$ = new BehaviorSubject<Pagination | any>({ });
+    this.sub = new SubSink();
    }
 
-  ngOnInit(): void {
-    this.userService.store$.subscribe((data:UserList) => {
-      this.users = data.data;
-      this.pagination = data.pagination
-    })
 
-    this.userService.isloading().subscribe(data => {
+  ngOnInit(): void {
+    this.sub.sink = this.userService.store$.subscribe((data: UserList) => {
+      this.users$.next(data.data);
+      this.pagination$.next(data.pagination)
+    })
+    this.sub.sink = this.userService.isloading().subscribe(data => {
       if (data) {
         this.spinner.show(this.spinnerName)
       } else {
@@ -35,11 +42,11 @@ export class UserListComponent implements OnInit {
   }
 
   block(id:number) {
-    this.userService.block(id).subscribe();
+    this.sub.sink = this.userService.block(id).subscribe();
   }
 
   deleteUser(id: number) {
-    this.userService.delete(id).subscribe();
+    this.sub.sink = this.userService.delete(id).subscribe();
   }
 
   searchUser(value:any) {
@@ -60,6 +67,10 @@ export class UserListComponent implements OnInit {
 
   getSearchValue() {
     return this.userService.getSearchValue();
+  }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 
 }

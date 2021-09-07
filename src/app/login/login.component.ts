@@ -1,9 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { NgxSpinnerService } from "ngx-spinner";
+import { SubSink } from 'subsink';
 
 
 import { AuthResponse } from '../interface/auth.interface';
@@ -12,10 +13,11 @@ import { AuthService } from '../service/auth/auth.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LoginComponent implements OnInit {
-
+export class LoginComponent implements OnInit , OnDestroy{
+  private subs :SubSink;
   spinnerName = "LoginComponent"
   loginForm = new FormGroup({
     // chandan@gmail.com
@@ -25,10 +27,17 @@ export class LoginComponent implements OnInit {
   });
 
 
-  constructor(private authService: AuthService, private router: Router, private spinner: NgxSpinnerService) { }
+  constructor(private authService: AuthService, private router: Router, private spinner: NgxSpinnerService) {
+    this.subs = new SubSink();
+  }
+
 
   ngOnInit(): void {
     this.loadclass();
+  }
+
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
   }
 
 
@@ -37,7 +46,7 @@ export class LoginComponent implements OnInit {
       return
     }
     this.spinner.show(this.spinnerName);
-    this.authService.signin(this.loginForm.value).subscribe((data: AuthResponse) => {
+    this.subs.sink = this.authService.signin(this.loginForm.value).subscribe((data: AuthResponse) => {
 
       this.router.navigate(['/dashboard']);
     }, (error: HttpErrorResponse) => {
@@ -84,5 +93,6 @@ export class LoginComponent implements OnInit {
     body?.classList.remove('sidebar-mini');
     body?.classList.add('login-page')
   }
+
 
 }

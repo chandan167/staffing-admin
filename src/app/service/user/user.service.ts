@@ -71,6 +71,7 @@ export class UserService extends Store<UserList> {
   private next_page$ = new BehaviorSubject<number | null>(1);
   private loading = new BehaviorSubject<boolean>(false);
   private refresh$ = new BehaviorSubject<boolean>(false);
+
   constructor(private http: HttpClient, private toster: ToastrService) {
     super(initalState)
 
@@ -98,9 +99,9 @@ export class UserService extends Store<UserList> {
   }
 
 
-  create(user: User): Observable<UserAddResponse> {
+  create(formData:FormData ): Observable<UserAddResponse> {
     this.loading.next(true);
-    return this.http.post<UserAddResponse>('/user', user).pipe(
+    return this.http.post<UserAddResponse>('/user', formData).pipe(
       tap((data:UserAddResponse) => {
         const previous_data = this.storeValue.data;
         const pagination = this.storeValue.pagination;
@@ -168,8 +169,9 @@ export class UserService extends Store<UserList> {
     return this.http.get<UserDetailResponse>(`/user/${id}`);
   }
 
-  update(id:number, data:User): Observable<UserUpdateResponse>{
-    return this.http.put<UserDetailResponse>(`/user/${id}`, data).pipe(
+  update(id: number, data: FormData): Observable<UserUpdateResponse>{
+
+    return this.http.post<UserDetailResponse>(`/user/${id}`, data).pipe(
       tap((data: UserUpdateResponse) => {
         let previous_data = this.storeValue.data;
         previous_data = previous_data.map(user => {
@@ -219,6 +221,5 @@ export class UserService extends Store<UserList> {
       this.nextValue(initalState);
     this.refresh$.next(!this.refresh$.getValue())
   }
-
 
 }

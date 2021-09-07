@@ -11,6 +11,18 @@
   transform: translate(-50%, -50%);
 }
 
+.cursor-pointer{
+  cursor: pointer;
+}
+
+.add-avrat-image{
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 100%;
+  border: 5px solid #ced4da;
+}
+
 
 .rotate-center {
   // position: static;

@@ -22,6 +22,12 @@
                 <div class="alert alert-danger" *ngIf="addUserForm.getError('serverError')">
                   <strong>Server Error</strong> <span class="ml-2">{{addUserForm.getError('serverError')}}</span>
                 </div>
+
+                <div class="mb-3 text-center">
+                  <label for="image"><img src="" #image appUserPlaceholderImage appImgPre [element]="inputImage" class="cursor-pointer add-avrat-image" ></label>
+                  <input type="file" accept="image/jpg, image/png" class="form-control d-none" #inputImage id="image" (change)="ImageChange($event)">
+                </div>
+
                 <div class="mb-3">
                   <label for="name">Name</label>
                   <input type="text" class="form-control" [class.is-invalid]="nameError()" placeholder="Enter name" id="name" formControlName="name">
@@ -53,7 +59,7 @@
 
                 <div class="my-3">
                   <button class="btn btn-primary mr-3" [disabled]='!addUserForm.valid'>Add User</button>
-                  <button class="btn btn-light"  type="reset" [disabled]='!addUserForm.touched || !addUserForm.dirty'>Reset</button>
+                  <button class="btn btn-light"  type="button" (click)="resetForm()" [disabled]='!addUserForm.dirty'>Reset</button>
                 </div>
             </form>
           </div>

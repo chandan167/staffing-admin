@@ -1,15 +1,19 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { SubSink } from 'subsink';
 import { AuthService } from '../service/auth/auth.service';
 
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AdminComponent implements OnInit {
+export class AdminComponent implements OnInit, OnDestroy {
 
-  constructor(private authService: AuthService) { }
+  private sub : SubSink
+  constructor(private authService: AuthService) {
+    this.sub = new SubSink();
+   }
+
 
   ngOnInit(): void {
     this.loadclass()
@@ -24,7 +28,12 @@ export class AdminComponent implements OnInit {
   }
 
   getProfile() {
-    this.authService.getProfile().subscribe();
+    this.sub.sink = this.authService.getProfile().subscribe();
+  }
+
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe()
   }
 
 }

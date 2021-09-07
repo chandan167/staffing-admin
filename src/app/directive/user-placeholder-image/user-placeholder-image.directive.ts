@@ -11,6 +11,9 @@ export class UserPlaceholderImageDirective {
   constructor(private elRef: ElementRef, private renderer: Renderer2) {
     this.LoaderElemant = this.renderer.createElement('i');
     this.renderer.setStyle(this.elRef.nativeElement, 'opacity', '0');
+    if (!this.elRef.nativeElement.src) {
+      this.elRef.nativeElement.src = this.src;
+    }
     this.buildLoader()
     this.ParentElemant = this.renderer.parentNode(this.elRef.nativeElement);
     this.renderer.appendChild(this.ParentElemant, this.LoaderElemant);
@@ -27,7 +30,6 @@ export class UserPlaceholderImageDirective {
   }
 
   buildLoader() {
-
     ['fas', 'fa-sync-alt', 'text-muted', 'absulate-center', 'rotate-center'].map((_class) => {
       this.renderer.addClass(this.LoaderElemant, _class);
     })

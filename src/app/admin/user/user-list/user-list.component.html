@@ -15,7 +15,7 @@
         <div class="card">
           <div class="card-header">
             <h3 class="card-title">User List <span
-                class="text-primary text-bold ml-1">{{users.length}}/{{pagination?.total}}</span></h3>
+                class="text-primary text-bold ml-1">{{(users$ | async)?.length}}/{{(pagination$ | async)?.total}}</span></h3>
 
             <div class="card-tools">
               <div class="input-group input-group-sm d-flex align-items-center" style="width: 250px;">
@@ -48,7 +48,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr app-table-tr *ngFor="let user of users" trackBy:userList [user]="user" (block)="block($event)" (delete)="deleteUser($event)"></tr>
+                <tr app-table-tr *ngFor="let user of users$ | async" trackBy:userList [user]="user" (block)="block($event)" (delete)="deleteUser($event)"></tr>
               </tbody>
             </table>
           </div>
