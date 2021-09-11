@@ -75,7 +75,7 @@ export class UserService extends Store<UserList> {
   constructor(private http: HttpClient, private toster: ToastrService) {
     super(initalState)
 
-    combineLatest(this.serch$, this.next_page$, this.refresh$).pipe(
+    combineLatest([this.serch$, this.next_page$, this.refresh$]).pipe(
       switchMap(([search, next_page]): any => {
         return this.findAllUsers(next_page, search);
       })
