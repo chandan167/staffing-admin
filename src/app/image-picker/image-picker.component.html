@@ -1,0 +1,9 @@
+<ng-container [formGroup]="initalConfig.formGroup" >
+  <label class="lable">{{initalConfig.lable}}</label>
+  <label class="image" for="ImagePickerComponentid">
+    <img appUserPlaceholderImage [placeholder-src]="initalConfig.preloadImage"  alt="" #image [ngClass]="initalConfig.class" [ngStyle]="initalConfig.style" >
+  </label>
+  <input type="file" appImgPre #input  [element]="image" id="ImagePickerComponentid" style="display: none;" (change)="onImageChange($event)">
+  <div *ngIf="fileLoad" class="mt-1"> <i class="fas fa-trash-alt text-danger cursor-pointer" (click)="remove(input)"></i> </div>
+</ng-container>
+

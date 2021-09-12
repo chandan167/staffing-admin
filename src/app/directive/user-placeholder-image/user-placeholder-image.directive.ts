@@ -1,9 +1,9 @@
-import { Directive, ElementRef, HostListener, Input, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, OnChanges, Renderer2, SimpleChanges } from '@angular/core';
 
 @Directive({
   selector: '[appUserPlaceholderImage]',
 })
-export class UserPlaceholderImageDirective {
+export class UserPlaceholderImageDirective implements OnChanges {
 
   private LoaderElemant : HTMLElement
   private ParentElemant : HTMLElement
@@ -17,6 +17,10 @@ export class UserPlaceholderImageDirective {
     this.buildLoader()
     this.ParentElemant = this.renderer.parentNode(this.elRef.nativeElement);
     this.renderer.appendChild(this.ParentElemant, this.LoaderElemant);
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    this.src = changes.src.currentValue;
+      this.elRef.nativeElement.src = this.src;
   }
   @HostListener('error')
   error() {

@@ -18,11 +18,64 @@
           <div class="card-body">
             <app-spinner [name]="spinnerName"></app-spinner>
 
-            <form>
-              <div class="mb-3">
+            <form [formGroup]="addCourseForm" (ngSubmit)="ngSubmit()">
 
+              <div class="mb-3">
+                <label for="title">Title</label>
+                <input type="text" id="title" class="form-control" placeholder="Enter course title" [class.is-invalid]="titleError" formControlName="title">
+                <span class="text-danger" *ngIf="titleError">{{titleError}}</span>
               </div>
+
+              <div class="mb-3">
+                <label for="price">Price</label>
+                <input type="text" id="price" class="form-control" [class.is-invalid]="priceError" placeholder="Enter course price" formControlName="price">
+                <span class="text-danger" *ngIf="priceError">{{priceError}}</span>
+              </div>
+
+              <div class="mb-3">
+                <label for="currency_code">Currency Code</label>
+                <input type="text" id="currency_code" class="form-control" formControlName="currency_code">
+              </div>
+
+              <div class="mb-3">
+                <label for="discount">Discount</label>
+                <input type="text" id="discount" class="form-control" placeholder="Enter course discount" formControlName="discount">
+              </div>
+
+              <div class="mb-3">
+                <label for="language">Language</label>
+                <input type="text" id="language" class="form-control" placeholder="Enter course language" formControlName="language">
+              </div>
+
+              <div class="mb-3">
+                <label for="hours_of_course_access_after_buy">Enter Hours</label>
+                <input type="text" id="hours_of_course_access_after_buy" class="form-control" placeholder="Enter hours" aria-describedby="emailHelp" formControlName="hours_of_course_access_after_buy">
+                <small id="hoursHelp" class="form-text text-muted">Enter hours do any user access the course after buying</small>
+              </div>
+
+              <div class="mb-3">
+                <app-image-picker [config]="imapeConfig"></app-image-picker>
+              </div>
+
+              <div class="mb-3">
+                <label for="about_the_course">About</label>
+                <textarea type="text" rows="3" id="about_the_course" formControlName="about_the_course" class="form-control" placeholder="Enter short note about the course" aria-describedby="aboutHelper"></textarea>
+                <small id="aboutHelper" class="form-text text-muted">Enter short note about the course</small>
+              </div>
+
+              <div class="mb-3">
+                <label for="discription">Discription</label>
+                <textarea rows="4" type="text" id="discription" formControlName="discription" class="form-control" placeholder="Ente course discription"></textarea>
+              </div>
+
+              <div class="mb-3">
+               <button class="btn btn-primary">Create Course</button>
+               <button type="button" class="btn btn-light ml-3">Reset</button>
+              </div>
+
             </form>
+
+            {{addCourseForm.value | json}}
 
           </div>
         </div>

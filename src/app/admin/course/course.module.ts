@@ -1,10 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-
-import { NgpImagePickerModule } from 'ngp-image-picker';
-
-
+import { ImagePickerModule } from 'src/app/image-picker';
 
 import { CourseComponent } from './course.component';
 import { AddCourseComponent } from './add-course/add-course.component';
@@ -28,7 +25,7 @@ import { CourseListTrComponent } from './course-list/course-list-tr/course-list-
     ShareModule,
     DirectiveModule,
     SweetAlert2Module,
-    NgpImagePickerModule
+    ImagePickerModule
   ]
 })
 export class CourseModule { }
