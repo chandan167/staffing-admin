@@ -131,8 +131,7 @@ export class UserService extends Store<UserList> {
           return user;
         });
         const pagination = this.storeValue.pagination;
-        const latest_data = previous_data;
-        this.nextValue({ data: latest_data, pagination });
+        this.nextValue({ data: previous_data, pagination });
         this.loading.next(false);
         this.toster.success(data.message, 'User status')
       }),
@@ -152,8 +151,8 @@ export class UserService extends Store<UserList> {
         let previous_data = this.storeValue.data;
         previous_data = previous_data.filter(user => user.id !== id);
         const pagination = this.storeValue.pagination;
-        const latest_data = previous_data;
-        this.nextValue({ data: latest_data, pagination });
+        pagination.total -= 1;
+        this.nextValue({ data: previous_data, pagination });
         this.loading.next(false)
         this.toster.success( data.message,'User delete')
       }),

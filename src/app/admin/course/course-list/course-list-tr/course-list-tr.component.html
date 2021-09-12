@@ -1,0 +1,44 @@
+<ng-container class="d-flex align-items-center">
+  <td>{{course.id}}</td>
+  <td>
+    <span>{{course?.title | slice:0:30}}</span>
+  </td>
+  <td>
+    <span>{{ course?.price | currency:course.currency_code:'symbol-narrow'}}</span>
+  </td>
+ <td>
+   <span>{{course?.discount }} %</span>
+ </td>
+ <td>
+  <span>{{ discountPrice | currency:course.currency_code:'symbol-narrow' }}</span>
+</td>
+
+ <td>
+  <span>{{ course?.hours_of_course_access_after_buy }} Hour</span>
+</td>
+ <td>
+  <span>{{ course?.language | titlecase}}</span>
+</td>
+<td>
+  <span>{{ course?.last_update | date:'d-MM-YYY - h:m a' }}</span>
+</td>
+  <td>
+    <button class="btn btn-danger btn-sm" (click)="changeStatus()" *ngIf="course.status ==  courseStatus.publish"  >{{course?.status | titlecase}}</button>
+    <button class="btn btn-success btn-sm" (click)="changeStatus()" *ngIf="course.status ==  courseStatus.unpublish" >{{course?.status | titlecase}}</button>
+  </td>
+  <td>
+    {{course?.created_at | date:'d-MM-YYY - h:m a'}}
+  </td>
+  <td>
+    <a class="btn btn-primary m-1"><i class="far fa-eye"></i></a>
+    <a  class="btn btn-primary m-1"><i class="far fa-edit"></i></a>
+    <a href="javascript:void(0)" class="btn btn-danger m-1" [swal]="deleteSwal"><i class="far fa-trash-alt"></i></a>
+  </td>
+</ng-container>
+
+
+<swal #deleteSwal title="Delete {{ course?.id }}?" text="This cannot be undone" icon="question"
+  [showCancelButton]="true" [focusCancel]="true" confirmButtonColor="#dc3545" confirmButtonText="Yes Delete"
+  (confirm)="deleteCourse()"></swal>
+
+

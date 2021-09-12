@@ -1,0 +1,64 @@
+<div class="container-fluid">
+  <div class="row mb-2">
+    <div class="col-sm-6">
+      <h1 class="m-0">Courses List</h1>
+    </div><!-- /.col -->
+  </div><!-- /.row -->
+</div><!-- /.container-fluid -->
+
+
+<section class="content">
+  <div class="container-fluid">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Course List <span
+                class="text-primary text-bold ml-1">{{(courses$ | async)?.length}}/{{(pagination$ | async)?.total}}</span></h3>
+
+            <div class="card-tools">
+              <div class="input-group input-group-sm d-flex align-items-center" style="width: 250px;">
+                <i class="fas fa-sync-alt mr-3 text-muted" title="Click for refresh list" (click)="onRefresh()" style="font-size: 20px; cursor: pointer;"></i>
+                <input type="text" name="table_search" class="form-control float-right" #search placeholder="Search"
+                  (input)="searchCourse(search.value)"  [value]="getSearchValue()">
+
+                <!-- <div class="input-group-append">
+                  <button type="submit" class="btn btn-default">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div> -->
+              </div>
+            </div>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body table-responsive p-0" appInfiiniteScroll (callBack)="nextPage()" style="height: 700px;">
+            <app-spinner [name]="spinnerName"></app-spinner>
+            <table class="table table-head-fixed table-hover text-nowrap">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Title</th>
+                  <th>Price</th>
+                  <th>Discount</th>
+                  <th>Price (After Discount)</th>
+                  <th>Access After Buy</th>
+                  <th>Language</th>
+                  <th>Last Update</th>
+                  <th>Status</th>
+                  <th>Created At</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr app-course-list-tr *ngFor="let course of courses$ | async" [course]="course" (status)="changeStatus($event)" (delete)="deleteCourse($event)" ></tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+      </div>
+    </div>
+  </div>
+</section>

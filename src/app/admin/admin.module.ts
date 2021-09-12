@@ -9,6 +9,8 @@ import { UserListComponent } from './user/user-list/user-list.component';
 import { UserModule } from './user/user.module';
 import { AddUserComponent } from './user/add-user/add-user.component';
 import { EditUserComponent } from './user/edit-user/edit-user.component';
+import { CourseListComponent } from './course/course-list/course-list.component';
+import { CourseModule } from './course/course.module';
 
 
 
@@ -21,6 +23,11 @@ const router: Routes = [
           { path: 'list', component: UserListComponent },
           { path: 'add', component: AddUserComponent },
           { path: ':id/edit', component: EditUserComponent },
+        ]
+      },
+      {
+        path: 'course', children: [
+          { path: 'list', component: CourseListComponent },
         ]
       },
       { path: "", redirectTo: "dashboard", pathMatch: 'full' },
@@ -42,7 +49,8 @@ const router: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(router),
-    UserModule
+    UserModule,
+    CourseModule
   ]
 })
 export class AdminModule { }
