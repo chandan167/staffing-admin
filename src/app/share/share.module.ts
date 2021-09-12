@@ -7,17 +7,19 @@ import { RouterModule } from '@angular/router';
 
 
 
+
 @NgModule({
   declarations: [],
   imports: [
-    ToastrModule.forRoot()
+    CommonModule,
+    ToastrModule.forRoot(),
   ],
   exports: [
     ReactiveFormsModule,
     CommonModule,
     SpinnerModule,
     ToastrModule,
-    RouterModule
+    RouterModule,
   ],
 })
 export class ShareModule { }

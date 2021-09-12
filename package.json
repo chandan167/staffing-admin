@@ -21,6 +21,7 @@
     "@ngx-loading-bar/http-client": "^5.1.2",
     "@ngx-loading-bar/router": "^5.1.2",
     "@sweetalert2/ngx-sweetalert2": "^10.0.0",
+    "ngp-image-picker": "^1.4.0",
     "ngx-spinner": "^12.0.0",
     "ngx-toastr": "^14.1.0",
     "rxjs": "~6.6.0",

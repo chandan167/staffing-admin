@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddCourseComponent implements OnInit {
 
+  spinnerName : string = 'AddCourseComponent'
   constructor() { }
 
   ngOnInit(): void {

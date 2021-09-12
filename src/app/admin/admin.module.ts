@@ -11,6 +11,7 @@ import { AddUserComponent } from './user/add-user/add-user.component';
 import { EditUserComponent } from './user/edit-user/edit-user.component';
 import { CourseListComponent } from './course/course-list/course-list.component';
 import { CourseModule } from './course/course.module';
+import { AddCourseComponent } from './course/add-course/add-course.component';
 
 
 
@@ -28,6 +29,7 @@ const router: Routes = [
       {
         path: 'course', children: [
           { path: 'list', component: CourseListComponent },
+          { path: 'add', component: AddCourseComponent },
         ]
       },
       { path: "", redirectTo: "dashboard", pathMatch: 'full' },
