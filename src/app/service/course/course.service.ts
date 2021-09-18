@@ -47,6 +47,12 @@ export interface CourseStatusChangetResponse extends ApiResponse{
   }
 }
 
+export interface AddCourseResponse extends ApiResponse{
+  data: {
+    course: Course
+  }
+}
+
 
 export interface CourseDeleteResponse extends ApiResponse{
   data: {
@@ -107,6 +113,26 @@ export class CourseService extends Store<CourseList> {
           this.nextValue({data: [...previous_value, ...data.data.courses.data], pagination: data.data.courses.pagination})
       })
     );
+  }
+
+  create(formData: FormData): Observable<AddCourseResponse> {
+    this.loading.next(true);
+    return this.http.post<AddCourseResponse>('/course', formData).pipe(
+      tap((data:AddCourseResponse) => {
+        const previous_data = this.storeValue.data;
+        const pagination = this.storeValue.pagination;
+        pagination.total += 1;
+        const latest_data = [data.data.course, ...previous_data];
+        this.nextValue({ data: latest_data, pagination });
+        this.loading.next(false)
+        this.toster.success(data.message, 'User Course')
+      }),
+      catchError((error: HttpErrorResponse) => {
+        this.loading.next(false);
+        this.toster.error(error.error.message, 'Error !')
+        throw error;
+      })
+    )
   }
 
   changeStatus(id: number): Observable<CourseStatusChangetResponse> {

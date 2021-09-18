@@ -49,8 +49,6 @@ export class AddUserComponent implements OnInit, OnDestroy {
       this.spinner.hide(this.spinnerName)
       this.addUserForm.setErrors({ serverError: error.error.message });
     })
-
-
   }
 
   ngOnDestroy(): void {
