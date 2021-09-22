@@ -12,6 +12,7 @@ import { EditUserComponent } from './user/edit-user/edit-user.component';
 import { CourseListComponent } from './course/course-list/course-list.component';
 import { CourseModule } from './course/course.module';
 import { AddCourseComponent } from './course/add-course/add-course.component';
+import { CourseSectionComponent } from './course/course-section/course-section.component';
 
 
 
@@ -30,6 +31,7 @@ const router: Routes = [
         path: 'course', children: [
           { path: 'list', component: CourseListComponent },
           { path: 'add', component: AddCourseComponent },
+          { path: ':id/section', component: CourseSectionComponent }
         ]
       },
       { path: "", redirectTo: "dashboard", pathMatch: 'full' },
@@ -52,7 +54,7 @@ const router: Routes = [
     CommonModule,
     RouterModule.forChild(router),
     UserModule,
-    CourseModule
+    CourseModule,
   ]
 })
 export class AdminModule { }

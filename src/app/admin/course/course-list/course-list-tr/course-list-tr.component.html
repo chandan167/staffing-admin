@@ -30,7 +30,7 @@
     {{course?.created_at | date:'d-MM-YYY - h:m a'}}
   </td>
   <td>
-    <a class="btn btn-primary m-1"><i class="far fa-eye"></i></a>
+    <a class="btn btn-primary m-1" [routerLink]="['/course', course?.id, 'section']"><i class="far fa-eye"></i></a>
     <a  class="btn btn-primary m-1"><i class="far fa-edit"></i></a>
     <a href="javascript:void(0)" class="btn btn-danger m-1" [swal]="deleteSwal"><i class="far fa-trash-alt"></i></a>
   </td>

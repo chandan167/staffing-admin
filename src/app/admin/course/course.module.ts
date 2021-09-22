@@ -10,6 +10,7 @@ import { ShareModule } from 'src/app/share/share.module';
 import { DirectiveModule } from 'src/app/directive/directive.module';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { CourseListTrComponent } from './course-list/course-list-tr/course-list-tr.component';
+import { CourseSectionModule } from './course-section/course-section.module';
 
 
 
@@ -25,7 +26,8 @@ import { CourseListTrComponent } from './course-list/course-list-tr/course-list-
     ShareModule,
     DirectiveModule,
     SweetAlert2Module,
-    ImagePickerModule
+    ImagePickerModule,
+    CourseSectionModule
   ]
 })
 export class CourseModule { }
