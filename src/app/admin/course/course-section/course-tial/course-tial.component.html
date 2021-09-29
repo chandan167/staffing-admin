@@ -15,7 +15,7 @@
         <span class="text-light ml-1 d-flex justify-content-between align-items-center"><strong>{{section?.number_of_videos}}</strong> <i class="fas fa-video ml-2"></i></span>
       </div>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" *ngIf="!editable">
-        <a class="dropdown-item" href="javascript:void(0)">Open</a>
+        <a class="dropdown-item" (click)="goTovideos()" href="javascript:void(0)">Open</a>
         <a class="dropdown-item" href="javascript:void(0)" (click)="makeEditable()">Edit</a>
         <a class="dropdown-item" [ngClass]="getStatusColor()" [swal]="chagestatus" href="javascript:void(0)">{{getStatus()}}</a>
         <a class="dropdown-item text-danger" href="javascript:void(0)" [swal]="deleteSwal">Delete</a>

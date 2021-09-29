@@ -13,6 +13,7 @@ import { CourseListComponent } from './course/course-list/course-list.component'
 import { CourseModule } from './course/course.module';
 import { AddCourseComponent } from './course/add-course/add-course.component';
 import { CourseSectionComponent } from './course/course-section/course-section.component';
+import { CourseVideoComponent } from './course/course-video/course-video.component';
 
 
 
@@ -31,7 +32,8 @@ const router: Routes = [
         path: 'course', children: [
           { path: 'list', component: CourseListComponent },
           { path: 'add', component: AddCourseComponent },
-          { path: ':id/section', component: CourseSectionComponent }
+          { path: ':id/section', component: CourseSectionComponent },
+          { path: ':id/section/:id/videos', component: CourseVideoComponent },
         ]
       },
       { path: "", redirectTo: "dashboard", pathMatch: 'full' },

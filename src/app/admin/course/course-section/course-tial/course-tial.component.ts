@@ -1,4 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CourseSction, CourseSectionService } from 'src/app/service/course_section/course-section.service';
 import { SubSink } from 'subsink';
@@ -20,7 +21,11 @@ export class CourseTialComponent implements OnInit, OnDestroy {
   @Input('section') section: CourseSction | null = null;
 
 
-  constructor(private courseSectionService: CourseSectionService, private spinner: NgxSpinnerService) { }
+  constructor(
+    private courseSectionService: CourseSectionService,
+    private spinner: NgxSpinnerService,
+    private router: Router
+  ) { }
   ngOnInit(): void {
     this.section_name = this.section?.section_name ?? '';
     this.spinnerName = `CourseTialComponent${this.section?.id}` ?? 'CourseTialComponent';
@@ -91,5 +96,9 @@ export class CourseTialComponent implements OnInit, OnDestroy {
 
   hideSpinner() {
     this.spinner.hide(this.spinnerName)
+  }
+
+  goTovideos() {
+    this.router.navigate(['/course', this.section?.course_id, 'section', this.section?.id, 'videos']);
   }
 }

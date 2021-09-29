@@ -24,6 +24,7 @@
     "ngp-image-picker": "^1.4.0",
     "ngx-spinner": "^12.0.0",
     "ngx-toastr": "^14.1.0",
+    "ngx-video-list-player": "^12.2.1",
     "rxjs": "~6.6.0",
     "subsink": "^1.0.2",
     "sweetalert2": "^11.1.4",
