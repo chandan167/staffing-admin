@@ -1,0 +1,36 @@
+
+  <div class="card shadow position-relative" style="border-radius: 15px;">
+    <app-spinner [name]="spinnerName"></app-spinner>
+    <div class="card-body" [ngClass]="getClass()" style="border-radius: 15px;">
+
+      <div *ngIf="editable">
+        <div class="d-flex justify-content-between align-items-center">
+          <input type="text" [(ngModel)]="section_name"  class="form-control-sm form-control">
+          <button class="btn btn-sm btn-light ml-2" (click)="update()"><i class="fas text-success fa-check fa-fw"></i></button>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-between align-items-center cursor-pointer" *ngIf="!editable" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span>{{section?.section_name}}</span>
+        <span class="text-light ml-1 d-flex justify-content-between align-items-center"><strong>{{section?.number_of_videos}}</strong> <i class="fas fa-video ml-2"></i></span>
+      </div>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" *ngIf="!editable">
+        <a class="dropdown-item" href="javascript:void(0)">Open</a>
+        <a class="dropdown-item" href="javascript:void(0)" (click)="makeEditable()">Edit</a>
+        <a class="dropdown-item" [ngClass]="getStatusColor()" [swal]="chagestatus" href="javascript:void(0)">{{getStatus()}}</a>
+        <a class="dropdown-item text-danger" href="javascript:void(0)" [swal]="deleteSwal">Delete</a>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <swal #deleteSwal title="Delete {{ section?.section_name }}?" text="This cannot be undone" icon="question"
+  [showCancelButton]="true" [focusCancel]="true" confirmButtonColor="#dc3545" confirmButtonText="Yes Delete"
+  (confirm)="deleteSection()"></swal>
+
+
+  <swal #chagestatus title="{{getStatus()}} {{ section?.section_name }}?" text="This can be undone" icon="question"
+  [showCancelButton]="true" [focusCancel]="true" confirmButtonColor="#dc3545" confirmButtonText="Yes {{getStatus()}}"
+  (confirm)="changeStatus()"></swal>
