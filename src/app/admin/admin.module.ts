@@ -33,7 +33,7 @@ const router: Routes = [
           { path: 'list', component: CourseListComponent },
           { path: 'add', component: AddCourseComponent },
           { path: ':id/section', component: CourseSectionComponent },
-          { path: ':id/section/:id/videos', component: CourseVideoComponent },
+          { path: ':course_id/section/:section_id/videos', component: CourseVideoComponent },
         ]
       },
       { path: "", redirectTo: "dashboard", pathMatch: 'full' },

@@ -14,9 +14,14 @@ export class BaseUrlInterceptor implements HttpInterceptor {
   constructor() {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    const newRequest: HttpRequest<unknown> = request.clone({
-      url: environment.baseUrl+request.url
-    })
+    let newRequest: HttpRequest<unknown>
+    if (request.headers.get('skip')) {
+      newRequest = request.clone()
+    } else {
+      newRequest = request.clone({
+        url: environment.baseUrl+request.url
+      })
+    }
     return next.handle(newRequest);
   }
 }

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { ImagePickerModule } from 'src/app/image-picker';
 import { NgxVideoListPlayerModule } from 'ngx-video-list-player';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 import { CourseComponent } from './course.component';
 import { AddCourseComponent } from './add-course/add-course.component';
@@ -24,7 +25,7 @@ import { VideoComponent } from './course-video/video/video.component';
     CourseListComponent,
     CourseListTrComponent,
     CourseVideoComponent,
-    VideoComponent
+    VideoComponent,
   ],
   imports: [
     CommonModule,
@@ -33,7 +34,8 @@ import { VideoComponent } from './course-video/video/video.component';
     SweetAlert2Module,
     ImagePickerModule,
     CourseSectionModule,
-    NgxVideoListPlayerModule
+    NgxVideoListPlayerModule,
+    NgxDropzoneModule
   ]
 })
 export class CourseModule { }

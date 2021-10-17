@@ -24,9 +24,15 @@ export class UnauthorizedInterceptor implements HttpInterceptor {
   }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    const newRequest: HttpRequest<unknown> = request.clone({
-      headers: request.headers.append('Authorization', this.token)
-    })
+
+    let newRequest: HttpRequest<unknown>
+    if (request.headers.get('skip')) {
+      newRequest = request.clone()
+    } else {
+      newRequest = request.clone({
+        headers: request.headers.append('Authorization', this.token)
+      })
+    }
     return next.handle(newRequest).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status == HttpStatusCode.Unauthorized) {
