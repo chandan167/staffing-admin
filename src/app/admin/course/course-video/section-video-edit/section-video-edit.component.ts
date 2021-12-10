@@ -12,7 +12,7 @@ export class SectionVideoEditComponent implements OnInit, OnDestroy {
 
   private section_id: number | any = null;
   private sub: SubSink = new SubSink();
-  public videos :any[] = [];
+  public videos: any[] = [];
   constructor(private videoService: VideoService, private activatedRoute: ActivatedRoute) { }
 
 
@@ -28,7 +28,7 @@ export class SectionVideoEditComponent implements OnInit, OnDestroy {
     this.videoService.getVideos(this.section_id).subscribe(data => {
       const videos: [any] = data.data.video;
       this.videos = videos;
-      })
+    })
   }
 
   ngOnDestroy(): void {
