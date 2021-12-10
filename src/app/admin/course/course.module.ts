@@ -15,6 +15,8 @@ import { CourseListTrComponent } from './course-list/course-list-tr/course-list-
 import { CourseSectionModule } from './course-section/course-section.module';
 import { CourseVideoComponent } from './course-video/course-video.component';
 import { VideoComponent } from './course-video/video/video.component';
+import { SectionVideoEditComponent } from './course-video/section-video-edit/section-video-edit.component';
+
 
 
 
@@ -26,6 +28,7 @@ import { VideoComponent } from './course-video/video/video.component';
     CourseListTrComponent,
     CourseVideoComponent,
     VideoComponent,
+    SectionVideoEditComponent
   ],
   imports: [
     CommonModule,

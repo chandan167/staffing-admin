@@ -15,14 +15,30 @@
         <div class="card">
           <div class="card-header">
             <div class="d-flex justify-content-end">
-              <button (click)="navigate()" class="btn btn-primary btn-sm">Edit</button>
+              Course videos
             </div>
           </div>
           <!-- /.card-header -->
           <div class="card-body">
 
-               <app-video></app-video>
 
+            <table class="table">
+              <thead>
+                <td>Id</td>
+                <td>File Name</td>
+                <td></td>
+              </thead>
+              <tbody>
+                <tr *ngFor="let video of videos">
+                  <td>{{ video.id }}</td>
+                  <td>{{video.file_name}}</td>
+                  <td >
+                    <button class="btn btn-primary btn-sm mr-2">Publish</button>
+                    <button class="btn btn-danger btn-sm">Delete</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
 
 
           </div>
@@ -33,3 +49,5 @@
     </div>
   </div>
 </section>
+
+

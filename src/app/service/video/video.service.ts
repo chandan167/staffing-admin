@@ -35,6 +35,10 @@ export class VideoService {
   constructor(private http: HttpClient, private toster: ToastrService) { }
 
 
+  getVideos(section_id : number): Observable<any> {
+    return this.http.get(`/course/section/video/${section_id}`);
+  }
+
   uploadVideo(section_id: number, file: File): Observable<any> {
     const data = {
       section_id, file_name: file.name

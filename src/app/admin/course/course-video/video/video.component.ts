@@ -37,6 +37,7 @@ export class VideoComponent implements OnInit {
   ngOnInit(): void {
     this.sub.sink = this.activatedRoute.paramMap.subscribe((param: ParamMap) => {
       this.section_id = Number(param.get('section_id'))
+      this.getVideos();
     })
   }
 
@@ -45,6 +46,20 @@ export class VideoComponent implements OnInit {
 
     ]
   };
+
+
+  getVideos() {
+    this.videoService.getVideos(this.section_id).subscribe(data => {
+      const videos: [any] = data.data.video;
+      videos.forEach((video: any) => {
+        this.config.sources.push({
+          src: video.path,
+          videoName: video.file_name,
+          type: video.type
+        });
+      })
+    })
+  }
 
 
 
@@ -91,7 +106,7 @@ export class VideoComponent implements OnInit {
               this.loaded = event.loaded
               this.total = event?.total;
               this.filesObj[data].progress = progress;
-              this.totalProgress =  Math.round(this.tempProgress + progress / this.filesObj.length)
+              this.totalProgress = Math.round(this.tempProgress + progress / this.filesObj.length)
 
               break;
             case HttpEventType.Response:

@@ -14,6 +14,7 @@ import { CourseModule } from './course/course.module';
 import { AddCourseComponent } from './course/add-course/add-course.component';
 import { CourseSectionComponent } from './course/course-section/course-section.component';
 import { CourseVideoComponent } from './course/course-video/course-video.component';
+import { SectionVideoEditComponent } from './course/course-video/section-video-edit/section-video-edit.component';
 
 
 
@@ -34,6 +35,7 @@ const router: Routes = [
           { path: 'add', component: AddCourseComponent },
           { path: ':id/section', component: CourseSectionComponent },
           { path: ':course_id/section/:section_id/videos', component: CourseVideoComponent },
+          { path: ':course_id/section/:section_id/edit', component: SectionVideoEditComponent },
         ]
       },
       { path: "", redirectTo: "dashboard", pathMatch: 'full' },
